@@ -10,8 +10,7 @@ This application consists of the following components:
     * `lib`: Next.js common libraries
 * Lambda functions
     * `agent`: Backend that operates Nova Sonic API, runs as long-running tasks on Lambda
-    * `extractor`: Implementation for extracting knowledge from conversation history
-    * `lambda`: Entry points for Lambda functions (agent, extractor)
+    * `lambda`: Entry points for Lambda functions (agent)
 
 ## Local Development
 
