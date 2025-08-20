@@ -1,0 +1,44 @@
+name: Build
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  pull_request:
+jobs:
+  Build-and-Test-CDK:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '22.x'
+      - run: |
+          npm ci
+          npm run format:check
+        working-directory: ./cdk
+        name: Install dependencies and run static analysis
+      - run: |
+          npm run build
+          npm run test
+        working-directory: ./cdk
+        name: build and test
+  Build-and-Test-Webapp:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '22.x'
+      - run: |
+          npm ci
+          npm run format:check
+        working-directory: ./app
+        name: Install dependencies and run static analysis
+      - run: |
+          cp .env.local.example .env.local
+          npm run build
+        working-directory: ./app
+        name: build
