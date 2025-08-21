@@ -40,15 +40,13 @@ You can configure deployment parameters by editing [cdk.ts](cdk/bin/cdk.ts).
 Configurable parameters include:
 
 * Deployment region (default: inherits IAM session)
+* Nova Sonic model region (default: us-east-1)
 * Email domains allowed to sign up to Cognito (default: all allowed)
 
 See the file for details.
 
 ### 3. Enable Bedrock Foundation Models
-From the [Amazon Bedrock Management Console](https://console.aws.amazon.com/bedrock/home#/modelaccess) in the `bedrockRegion` you specified in the step#2 (us-east-1 by default), enable the following models:
-
-1. Nova Sonic
-2. Claude Sonnet 3.7 (used for extracting knowledge from conversation content)
+From the [Amazon Bedrock Management Console](https://console.aws.amazon.com/bedrock/home#/modelaccess) in the `bedrockRegion` you specified in the step#2 (us-east-1 by default), enable Nova Sonic model.
 
 ### 4. CDK Bootstrap
 

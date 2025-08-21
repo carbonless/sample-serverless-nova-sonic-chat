@@ -20,7 +20,7 @@ interface CdkStackProps extends cdk.StackProps {
   readonly allowedEmailDomainList?: string[];
 
   /**
-   * Bedrock region for AI models
+   * Bedrock region for Nova Sonic model. Please see [this page](https://docs.aws.amazon.com/nova/latest/userguide/what-is-nova.html) for the list of supported regions.
    * @default 'us-east-1'
    */
   readonly bedrockRegion?: string;
