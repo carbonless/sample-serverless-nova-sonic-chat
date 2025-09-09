@@ -305,7 +305,7 @@ export class NovaStream {
           promptName,
           contentName,
           type: 'TEXT',
-          interactive: true,
+          interactive: false,
           role: 'SYSTEM',
           textInputConfiguration: {
             mediaType: 'text/plain',
@@ -344,7 +344,7 @@ export class NovaStream {
           promptName,
           contentName: textPromptID,
           type: 'TEXT',
-          interactive: true,
+          interactive: false,
           textInputConfiguration: { mediaType: 'text/plain' },
         },
       },
