@@ -3,7 +3,7 @@ import { events, EventsChannel } from 'aws-amplify/data';
 import { AudioPlayer } from './lib/AudioPlayer';
 import { AudioRecorder } from './lib/AudioRecorder';
 import useChatHistory from './useChatHistory';
-import { DispatchEventParams, SpeechToSpeechEventSchema } from '@/common/schemas';
+import { DispatchEventParams, McpConfig, SpeechToSpeechEventSchema } from '@/common/schemas';
 import { Amplify } from 'aws-amplify';
 import { decodeJWT } from 'aws-amplify/auth';
 import { useRouter } from 'next/navigation';
@@ -283,14 +283,14 @@ export const useSpeechToSpeech = (userId: string, onSessionComplete: (endReason:
     }
   };
 
-  const startSession = async (voiceId: string, systemPrompt: string) => {
+  const startSession = async (voiceId: string, systemPrompt: string, mcpConfig: McpConfig) => {
     if (isActive || isLoading) {
       return;
     }
     clear();
     setIsLoading(true);
     systemPromptRef.current = systemPrompt;
-    executeSpeechToSpeech({ systemPrompt, voiceId });
+    executeSpeechToSpeech({ systemPrompt, voiceId, mcpConfig });
   };
 
   const toggleMute = useCallback(() => {
