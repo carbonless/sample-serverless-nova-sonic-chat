@@ -30,7 +30,7 @@ export class Agent extends Construct {
         cmd: ['agent.handler'],
         platform: Platform.LINUX_ARM64,
       }),
-      memorySize: 256,
+      memorySize: 512,
       ephemeralStorageSize: Size.mebibytes(512),
       timeout: Duration.minutes(15),
       architecture: Architecture.ARM_64,

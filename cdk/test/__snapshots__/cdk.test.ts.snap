@@ -118,7 +118,7 @@ exports[`Snapshot test: MainStack 1`] = `
             "agent.handler",
           ],
         },
-        "MemorySize": 256,
+        "MemorySize": 512,
         "PackageType": "Image",
         "Role": {
           "Fn::GetAtt": [

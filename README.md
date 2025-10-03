@@ -165,7 +165,7 @@ An example mcp config is below:
 
 ## Cost
 
-Assuming one session lasts 10 minutes, the cost per session (USD) is as follows. Note that the dimensions such as token counts per session are examples and will vary depending on your actual use case.
+Assuming **10 minutes/session**, the cost per session (USD) is as follows. Note that the dimensions such as token counts per session are examples and will vary depending on your actual use case.
 
 | AWS service        | Dimensions                               | Cost [USD/session] |
 |--------------------|------------------------------------------|------------------|
@@ -175,13 +175,13 @@ Assuming one session lasts 10 minutes, the cost per session (USD) is as follows.
 | Bedrock Nova Sonic | Output token (text): 1000 tokens/session | 0.00024          |
 | AppSync Events     | Requests: 250 events/session/minute      | **0.0025**       |
 | AppSync Events     | Connection: 10 minutes/session           | 0.00000008       |
-| Lambda             | Duration: 256MB, 10 minutes/session      | **0.002**        |
+| Lambda             | Duration: 512MB, 10 minutes/session      | **0.004**        |
 | Lambda             | Requests: 2 invocations/session          | 0.00000004       |
 | API Gateway        | Requests: 20 requests/session            | 0.00001          |
 | DynamoDB           | Read: 10 RRU/session                     | 0.00000125       |
 | DynamoDB           | Write: 50 WRU/session                    | 0.00003125       |
 | DynamoDB           | Storage: 30 kB/session (monthly)         | 0.0000075        |
-| TOTAL              |                                          | 0.042            |
+| TOTAL              |                                          | 0.044            |
 
 Looking only at real-time communication costs (Lambda + AppSync Events), it comes to 0.00045 USD/minute. This is about 1/9th the cost of [LiveKit Cloud](https://livekit.io/pricing), showing this is a scalable yet cost-efficient architecture.
 
