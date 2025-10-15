@@ -6,6 +6,7 @@ import { SessionRepository } from '@/common/sessionRepository';
 import { dispatchEvent, processResponseStream, initializeSubscription } from './events';
 import { voiceConfigurations } from './voices';
 import { getWeatherTool } from './tools/weather';
+import { ragTool } from './tools/rag';
 import { closeMcpServers, getMcpToolSpecs } from '@/agent/tools/mcp';
 import { McpConfig } from '@/common/schemas';
 
@@ -38,8 +39,8 @@ ${voiceConfig.additionalPrompt}
     console.log(`session ${sessionId} initialized`);
 
     const tools = [
-      //
       getWeatherTool,
+      ragTool,
     ];
     console.log(`Initializing mcp tools... ${Object.keys(mcpConfig.mcpServers).join(',')}`);
     const mcpTools = await getMcpToolSpecs(sessionId, mcpConfig);
