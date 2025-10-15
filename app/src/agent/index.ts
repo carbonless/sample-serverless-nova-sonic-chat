@@ -7,6 +7,7 @@ import { dispatchEvent, processResponseStream, initializeSubscription } from './
 import { voiceConfigurations } from './voices';
 import { getWeatherTool } from './tools/weather';
 import { ragTool } from './tools/rag';
+import { emailTool } from './tools/email';
 import { closeMcpServers, getMcpToolSpecs } from '@/agent/tools/mcp';
 import { McpConfig } from '@/common/schemas';
 
@@ -41,6 +42,7 @@ ${voiceConfig.additionalPrompt}
     const tools = [
       getWeatherTool,
       ragTool,
+      emailTool,
     ];
     console.log(`Initializing mcp tools... ${Object.keys(mcpConfig.mcpServers).join(',')}`);
     const mcpTools = await getMcpToolSpecs(sessionId, mcpConfig);
