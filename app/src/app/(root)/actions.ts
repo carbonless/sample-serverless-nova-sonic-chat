@@ -6,10 +6,17 @@ import { LambdaClient, InvokeCommand } from '@aws-sdk/client-lambda';
 import { authActionClient } from '@/lib/safe-action';
 import { mcpConfigSchema } from '@/common/schemas';
 
+const toolConfigSchema = z.object({
+  customTools: z.array(z.string()),
+  mcpServers: z.array(z.string()),
+  knowledgeBases: z.array(z.string()),
+}).optional();
+
 const startNovaSonicSessionSchema = z.object({
   systemPrompt: z.string(),
   voiceId: z.string(),
   mcpConfig: mcpConfigSchema,
+  toolConfig: toolConfigSchema,
 });
 
 // Initialize Lambda client
@@ -31,6 +38,7 @@ export const startNovaSonicSession = authActionClient
       systemPrompt: parsedInput.systemPrompt,
       voiceId: parsedInput.voiceId,
       mcpConfig: parsedInput.mcpConfig,
+      toolConfig: parsedInput.toolConfig,
     };
 
     try {

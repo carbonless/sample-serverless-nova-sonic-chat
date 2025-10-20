@@ -282,7 +282,7 @@ export class NovaStream {
             channelCount: 1,
             voiceId,
           },
-          ...(this.tools.length > 0
+          ...(this.tools.length > 0 || this.mcpTools.length > 0
             ? {
                 toolUseOutputConfiguration: {
                   mediaType: 'application/json',
@@ -292,7 +292,7 @@ export class NovaStream {
                     ...this.tools.map((tool) => ({
                       toolSpec: tool.toolSpec(),
                     })),
-                    ...this.mcpTools.map((tool) => ({ toolSpec: tool.toolSpec! })),
+                    ...this.mcpTools.map((tool) => ({ toolSpec: tool })),
                   ],
                 },
               }

@@ -15,6 +15,8 @@ import ConversationList from '@/components/conversation-list';
 import Messages from '@/components/messages';
 import TimerDisplay from './timer-display';
 import { EmptyMcpConfig, mcpConfigSchema } from '@/common/schemas';
+import ToolSelection from '@/components/tool-selection';
+import { ToolConfig, DEFAULT_TOOL_CONFIG } from '@/common/toolConfig';
 
 interface Conversation {
   id: string;
@@ -55,6 +57,7 @@ export default function VoiceChatClient({ initialConversations, userId }: VoiceC
   const [mcpConfig, setMcpConfig] = useState(EmptyMcpConfig);
   const [inputMcpConfig, setInputMcpConfig] = useState(JSON.stringify(EmptyMcpConfig, null, 2));
   const [mcpConfigError, setMcpConfigError] = useState<string | null>(null);
+  const [toolConfig, setToolConfig] = useState<ToolConfig>(DEFAULT_TOOL_CONFIG);
   const [completionModalOpen, setCompletionModalOpen] = useState(false);
   const [endReason, setEndReason] = useState('');
   const scrollAreaRef = useRef<HTMLDivElement>(null);
@@ -113,7 +116,9 @@ export default function VoiceChatClient({ initialConversations, userId }: VoiceC
     if (scrollAreaRef.current) {
       const scrollElement = scrollAreaRef.current.querySelector('[data-radix-scroll-area-viewport]');
       if (scrollElement) {
-        scrollElement.scrollTop = scrollElement.scrollHeight;
+        setTimeout(() => {
+          scrollElement.scrollTop = scrollElement.scrollHeight;
+        }, 0);
       }
     }
   }, [showingMessages]);
@@ -135,7 +140,7 @@ export default function VoiceChatClient({ initialConversations, userId }: VoiceC
   }, [isActive, sessionStartTime]);
 
   const handleStartSession = () => {
-    startSession(voiceId, systemPrompt, mcpConfig);
+    startSession(voiceId, systemPrompt, mcpConfig, toolConfig);
   };
 
   const handleCloseSession = () => {
@@ -326,7 +331,15 @@ export default function VoiceChatClient({ initialConversations, userId }: VoiceC
                 </Select>
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">MCP Config:</label>
+                <label className="block text-sm font-medium mb-2">Tool Selection:</label>
+                <ToolSelection 
+                  toolConfig={toolConfig}
+                  onConfigChange={setToolConfig}
+                  disabled={isActive || isLoading}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">MCP Config (Advanced):</label>
                 <div className="space-y-2">
                   <Textarea
                     value={inputMcpConfig}

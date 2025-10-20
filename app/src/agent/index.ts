@@ -7,15 +7,23 @@ import { dispatchEvent, processResponseStream, initializeSubscription } from './
 import { voiceConfigurations } from './voices';
 import { getWeatherTool } from './tools/weather';
 import { ragTool } from './tools/rag';
+import { emailTool } from './tools/email';
 import { closeMcpServers, getMcpToolSpecs } from '@/agent/tools/mcp';
 import { McpConfig } from '@/common/schemas';
+
+interface ToolConfig {
+  customTools: string[];
+  mcpServers: string[];
+  knowledgeBases: string[];
+}
 
 export const main = async (
   sessionId: string,
   userId: string,
   systemPrompt: string,
   voiceId: string,
-  mcpConfig: McpConfig
+  mcpConfig: McpConfig,
+  toolConfig?: ToolConfig
 ) => {
   let channel: EventsChannel | undefined = undefined;
   const context: { stream?: NovaStream } = {};
@@ -38,10 +46,19 @@ ${voiceConfig.additionalPrompt}
 
     console.log(`session ${sessionId} initialized`);
 
-    const tools = [
-      getWeatherTool,
-      ragTool,
-    ];
+    // Dynamic tool loading based on toolConfig
+    const tools = [];
+    if (!toolConfig || toolConfig.customTools.includes('weather')) {
+      tools.push(getWeatherTool);
+    }
+    if (!toolConfig || toolConfig.customTools.includes('email')) {
+      tools.push(emailTool);
+    }
+    if (!toolConfig || toolConfig.customTools.includes('rag')) {
+      tools.push(ragTool);
+    }
+    
+    console.log(`Selected custom tools: ${tools.length > 0 ? tools.map(t => t.name).join(',') : 'none'}`);
     console.log(`Initializing mcp tools... ${Object.keys(mcpConfig.mcpServers).join(',')}`);
     const mcpTools = await getMcpToolSpecs(sessionId, mcpConfig);
 
